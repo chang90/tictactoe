@@ -1,21 +1,166 @@
-body{
-	display: flex;
-	justify-content: center;
+*{
+	margin: 0;
+	padding: 0;
+	font-family: 'Gochi Hand', cursive;
+	box-sizing: border-box;
 }
+body{
+
+	justify-content: center;
+	background-image: url("images/beach.jpg");
+	/*background-size: cover;*/
+}
+
 .bigContainer{
+	width: 100%;
 	max-width: 1000px;
+	min-height: 500px;
+	margin: 0 auto;
+	height: 100vh;
+	background-color: rgba(200,200,200,0.5);
+	display: grid;
+	grid-template-rows: 100px 1fr 50px;
+	grid-template-columns: 1fr;
 }
 nav{
 	width: 100%;
-	height: 100px;
+	background-color: rgba(0,0,0,0.3);
+	display: flex;
+	justify-content: center;
+	align-content: center;
+
+}
+nav h1{
+	font-size: 60px;
+	line-height: 100px;
+	color: white;
+	text-shadow: 10px 10px 5px #888888;
+}
+
+aside{
+	float: right;
+	width: 300px;
+	height: 80%;
+	background-color: rgba(255,255,255,0.3);
 	text-align: center;
+	padding: 20px;
+	border-radius: 30px 0 0 30px;
+	margin-top: 10px;
+	min-height: 100px;
+
+}
+main{
+	margin-right: 305px;
+	height: 100%;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+  align-items: center;
+	
+	
+}
+.game{
+	width: 100%;
+	height: 100%;
+	max-width: 350px;
+	max-height: 350px;
+	display: flex;
+	flex-direction: column;
+	border: solid 30px rgba(255,255,255,0.5);
+	border-radius: 30px;
+	
+}
+.game>div{
+	width: 100%;
+	display: flex;
+	flex: 1;
 }
 .game span{
-	background-color: #ccc;
 	margin: 10px;
-	line-height: 40px;
-	width: 70px;
-	height: 40px;
+	line-height: 100px;
 	text-align: center;
-	display: inline-block;
+	flex: 1;
+	border: 3px solid black;
+	font-size: 100px;
+  position: relative;
+}
+.game span:hover{
+	cursor: pointer;
+}
+
+
+.game .backslash::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border-bottom: 3px solid deeppink;
+  transform-origin: bottom center;
+  transform: rotateZ(45deg) scale(3);
+}
+
+.game .slash::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  border-bottom: 3px solid deeppink;
+  transform-origin: bottom center;
+  transform:rotateZ(-45deg) scale(3);
+}
+
+.game .horizontalLine::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:50px;
+  box-sizing:border-box;
+  border-radius: 3px;
+  border-bottom: 3px solid deeppink;
+  transform-origin:bottom center;
+  transform:rotateZ(0deg) scale(3);
+}
+
+.game .verticalLine::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:50px;
+  box-sizing:border-box;
+  border-radius: 3px;
+  border-bottom:3px solid deeppink;
+  transform-origin:bottom center;
+  transform:rotateZ(90deg) scale(3);
+}
+
+.butonBox{
+	position: relative;
+}
+
+.buttonBox button{
+	margin: 10px 0;
+	display: block;
+	width: 60px;
+	height: 30px;
+	border-radius: 10px;
+	background-color: #ccc;
+	z-index: 100;
+	position: absolute;
+}
+
+footer{
+	text-align: center;
 }
