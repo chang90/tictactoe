@@ -8,7 +8,7 @@ body{
 
 	justify-content: center;
 	background-image: url("images/beach.jpg");
-	/*background-size: cover;*/
+	background-size: cover;
 }
 
 .bigContainer{
@@ -40,15 +40,27 @@ nav h1{
 aside{
 	float: right;
 	width: 300px;
-	height: 80%;
+	height: 90%;
 	background-color: rgba(255,255,255,0.3);
 	text-align: center;
 	padding: 20px;
 	border-radius: 30px 0 0 30px;
-	margin-top: 10px;
-	min-height: 100px;
-
+	margin-top: 20px;
+	min-height: 400px;
 }
+aside>h3{
+	font-size: 30px;
+}
+.recordList>div{
+	font-size: 25px;
+	line-height: 25px;
+	padding: 10px;
+}
+#totalScore{
+	border-top: solid 3px black;
+	padding-top: 20px;
+}
+
 main{
 	margin-right: 305px;
 	height: 100%;
@@ -65,25 +77,32 @@ main{
 	height: 100%;
 	max-width: 350px;
 	max-height: 350px;
+	min-width: 255px;
+	box-sizing: content-box;
 	display: flex;
 	flex-direction: column;
 	border: solid 30px rgba(255,255,255,0.5);
+	background-color: rgba(0,192,255,0.3);
 	border-radius: 30px;
 	
 }
 .game>div{
 	width: 100%;
-	display: flex;
+	height: 30%;
 	flex: 1;
 }
 .game span{
-	margin: 10px;
+	margin: 2%;
 	line-height: 100px;
 	text-align: center;
-	flex: 1;
-	border: 3px solid black;
+	display: inline-block;
+	width: 29%;
+	height: 90%;
+	border: 3px solid white;
 	font-size: 100px;
   position: relative;
+  color: white;
+  border-radius: 10px;
 }
 .game span:hover{
 	cursor: pointer;
