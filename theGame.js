@@ -1,4 +1,21 @@
 function game(player1,player2){
+
+	var currentPlayer = null;
+	var winnerRecord = [];
+	var playerArr = [];
+
+	playerArr.push(player1);
+	if(player2){
+		playerArr.push(player2);
+	}
+	var flag = whoIsFirst();
+
+  var computerPlayer = false;
+  if (playerArr.length === 1){
+  	computerPlayer = true;
+  }
+	mainGame();
+
 	function mainGame() {
 		gameState = "start";
 		var resultArr = [];
@@ -47,53 +64,60 @@ function game(player1,player2){
 
 	function clickEvent(resultArr, playerArr, placeHold) {
 		if (computerPlayer==true && flag == 0){
+			currentPlayer = "AI";
 			aiMove(resultArr,placeHold);
 		}
 		var methodClick = function(event) {
-			var idArr = event.target.id.split("_");
 
-			//the losser will get offensive move in next round
-			if(resultArr.join().split(",").filter(value => value != placeHold).length===0){
-				if(winnerRecord.slice(-1)[0]===playerArr[0]){
-					flag = 0;
-				}else if(winnerRecord.slice(-1)[0]===playerArr[1]){
-					flag = 1;
-				}				
-			}
-			
-			if (flag === 0) {
-				flag = 1;
-			} else {
-				flag = 0;
-			}
+		var idArr = event.target.id.split("_");
+		
+		if (resultArr[Number(idArr[0])][Number(idArr[1])] === placeHold) {
 
-			if(computerPlayer === true && flag ===1){
-				currentPlayer = "computer";
-			}else{
-				currentPlayer = playerArr[flag];
-			}
 
-			if (resultArr[Number(idArr[0])][Number(idArr[1])] === placeHold) {
-				event.target.textContent = playerArr[flag];
-				resultArr[Number(idArr[0])][Number(idArr[1])] = playerArr[flag];
-				event.target.style.backgroundColor = "lightBlue";
-
-				var winner = checkWin(resultArr, placeHold, methodClick);
-				if (typeof(winner) === 'string') {
-					winnerRecord.push(winner);
-					gameState = "end";
-					sideBarResult();
+				//the losser will get offensive move in next round
+				if(resultArr.join().split(",").filter(value => value != placeHold).length===0){
+					if(winnerRecord.slice(-1)[0]===playerArr[0]){
+						flag = 0;
+					}else if(winnerRecord.slice(-1)[0]===playerArr[1]){
+						flag = 1;
+					}				
 				}
-			}
-			//play with computer
-			if(computerPlayer === true){
-				console.error("AI not finish!")
-				aiMove(resultArr,placeHold);
-				winner = checkWin(resultArr, placeHold, methodClick);
-				if (typeof(winner) === 'string') {
-					winnerRecord.push(winner);
-					gameState = "end";
-					sideBarResult();
+				
+				if (flag === 0) {
+					flag = 1;
+				} else {
+					flag = 0;
+				}
+
+				if(computerPlayer === true && flag ===1){
+					currentPlayer = "AI";
+				}else{
+					currentPlayer = playerArr[flag];
+				}
+
+				if (resultArr[Number(idArr[0])][Number(idArr[1])] === placeHold) {
+					event.target.textContent = playerArr[flag];
+					resultArr[Number(idArr[0])][Number(idArr[1])] = playerArr[flag];
+					event.target.style.backgroundColor = "lightBlue";
+
+					var winner = checkWin(resultArr, placeHold, methodClick);
+					if (typeof(winner) === 'string') {
+						winnerRecord.push(winner);
+						gameState = "end";
+						sideBarResult();
+					}
+				}
+				//play with computer
+				if(computerPlayer === true && gameState == "start"){
+					currentPlayer = "AI";
+					console.error("AI not finish!")
+					aiMove(resultArr,placeHold);
+					var winner = checkWin(resultArr, placeHold, methodClick);
+					if (typeof(winner) === 'string') {
+						winnerRecord.push(winner);
+						gameState = "end";
+						sideBarResult();
+					}
 				}
 			}
 		}
@@ -105,22 +129,23 @@ function game(player1,player2){
 
   //computer AI player
 	function aiMove(resultArr,placeHold){
-		console.log("resultArr");
-		console.log(resultArr);
 		
-		var randomX = Math.floor(Math.random()*3);
-		var randomY = Math.floor(Math.random()*3);
-		while(resultArr[randomY][randomX] != placeHold){
-			randomX = Math.floor(Math.random()*3);
-			randomY = Math.floor(Math.random()*3);
-			
-		}
-		resultArr[randomY][randomX] = "%";
-		document.getElementById(randomY+"_"+randomX).textContent = resultArr[randomY][randomX];
-		if (flag === 0) {
-			flag = 1;
-		} else {
-			flag = 0;
+		if(resultArr.join().split(",").filter(value => value === placeHold).length>0){
+			var randomX = Math.floor(Math.random()*3);
+			var randomY = Math.floor(Math.random()*3);
+
+			while(resultArr[randomY][randomX] != placeHold){
+				randomX = Math.floor(Math.random()*3);
+				randomY = Math.floor(Math.random()*3);
+				
+			}
+			resultArr[randomY][randomX] = "%";
+			document.getElementById(randomY+"_"+randomX).textContent = resultArr[randomY][randomX];
+			if (flag === 0) {
+				flag = 1;
+			} else {
+				flag = 0;
+			}
 		}
 	}
 
@@ -136,6 +161,7 @@ function game(player1,player2){
 				for(var j = 0; j<3; j++){
 					document.getElementById(i+"_"+j).classList.add("horizontalLine");
 				}
+				return winner;
 			}
 		}
 
@@ -147,23 +173,27 @@ function game(player1,player2){
 				for(var j = 0; j<3; j++){
 					document.getElementById(j+"_"+i).classList.add("verticalLine");
 				}
+				return winner;
 			}
 		}
+
 	  //for slash situation
 		if (resultArr[0][0] === resultArr[1][1] && resultArr[0][0] === resultArr[2][2] && resultArr[0][0] != placeHold) {
 			// console.log(resultArr[0][0] + " win");
 			winner = resultArr[0][0];
 				for(var j = 0; j<3; j++){
 				document.getElementById(j+"_"+j).classList.add("backslash");
-			}	
+			}
+			return winner;
 		}
 
 		if (resultArr[0][2] === resultArr[1][1] && resultArr[0][2] === resultArr[2][0] && resultArr[0][2] != placeHold) {
 			// console.log(resultArr[0][2] + " win");
 			winner = resultArr[0][2];
 			for(var j = 0; j<3; j++){
-					document.getElementById(j+"_"+(2-j)).classList.add("slash");
-				}		
+				document.getElementById(j+"_"+(2-j)).classList.add("slash");
+			}
+			return winner;		
 		}
 
 		if (typeof winner === 'string') {
@@ -194,7 +224,10 @@ function game(player1,player2){
 
 	  if(winnerRecord.length >= 5){
 	  	var player1Num = winnerRecord.filter(elem => elem == playerArr[0]).length;
-	  	var player2Num = winnerRecord.filter(elem => elem == (playerArr[1]|| "%")).length;
+	  	var player2Num = winnerRecord.filter(elem => elem == playerArr[1]).length;
+	  	if(computerPlayer === true){
+	  		player2Num = winnerRecord.filter(elem => elem == "AI").length;
+	  	}
 	  	
 	 		var newRecord = document.createElement("div");
 	 		newRecord.id = "totalScore";
@@ -206,7 +239,11 @@ function game(player1,player2){
 	  	if(player1Num > player2Num){
 	    	newRecord.textContent = playerArr[0] + " win the game!";
 	  	}else if(player1Num < player2Num){
-	    	newRecord.textContent = playerArr[1] + " win the game!";
+	  		if(computerPlayer === true){
+	  			newRecord.textContent = "AI win the game!";
+	  		}else{
+	    		newRecord.textContent = playerArr[1] + " win the game!";
+	  		}
 	  	}else{
 	  		newRecord.textContent = 'Tie!';
 	  	}
@@ -228,7 +265,6 @@ function game(player1,player2){
 			// if the game is incomplete
 			if(gameState ==="start"){
 				var winner = currentPlayer;
-
 				winnerRecord.push(winner);
 				gameState = "end";
 				sideBarResult();
@@ -241,32 +277,14 @@ function game(player1,player2){
 			mainGame();
 		}
 	}
-
-	//main game start here!
-	var currentPlayer = null;
-	var winnerRecord = [];
-	var playerArr = [];
-
-	playerArr.push(player1);
-	if(player2){
-		playerArr.push(player2);
-	}
-	var flag = whoIsFirst();
-
-  var computerPlayer = false;
-  if (playerArr.length === 1){
-  	computerPlayer = true;
-  }
-	mainGame();
 }
 
 function getPlayer(){
 	do{
 		var player1 = prompt("please input player1 name:","X");
 		var playerWithComputer = confirm("Do you want to play with computer?");
-		if (playerWithComputer==true)
-		{
-		    return[player1];
+		if (playerWithComputer==true){
+		  return [player1];
 		}
 
 		var player2 = prompt("please input player2 name:","Y");
