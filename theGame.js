@@ -138,14 +138,71 @@ function game(player1,player2){
 	function aiMove(resultArr,placeHold){
 		
 		if(resultArr.join().split(",").filter(value => value === placeHold).length>0){
-			var randomX = Math.floor(Math.random()*3);
-			var randomY = Math.floor(Math.random()*3);
-
-			while(resultArr[randomY][randomX] != placeHold){
-				randomX = Math.floor(Math.random()*3);
-				randomY = Math.floor(Math.random()*3);
-				
+			
+			var targetPoint = [];
+			//
+			for(var i=0;i<3;i++){
+				if(resultArr[i].filter(elem => elem == playerArr[0]).length==2 && 
+					resultArr[i].filter(elem => elem == placeHold).length==1){
+					  targetPoint = [i,(resultArr[i].indexOf(placeHold))];
+						console.log("find targetPoint");
+				}
 			}
+
+			for(var i=0;i<3;i++){
+				var columnArr = [resultArr[0][i],resultArr[1][i],resultArr[2][i]];
+				if(columnArr.filter(elem => elem == playerArr[0]).length==2 && 
+					columnArr.filter(elem => elem == placeHold).length==1){
+					  targetPoint = [(columnArr.indexOf(placeHold)),i];
+						console.log("find targetPoint");
+				}
+			}
+
+			var slashArr = [resultArr[0][0],resultArr[1][1],resultArr[2][2]];
+			if(slashArr.filter(elem => elem == playerArr[0]).length==2 && 
+				slashArr.filter(elem => elem == placeHold).length==1){
+				if(slashArr.indexOf(placeHold) == 0){
+					targetPoint = [0,0];
+				}else if(slashArr.indexOf(placeHold) == 1){
+					targetPoint = [1,1];
+				}
+				else{
+					targetPoint = [2,2];
+				}
+					console.log("find targetPoint");
+			}
+
+			var slashBackArr = [resultArr[0][2],resultArr[1][1],resultArr[2][0]];
+			if(slashBackArr.filter(elem => elem == "%").length==2 && 
+				slashBackArr.filter(elem => elem == placeHold).length==1){
+				if(slashBackArr.indexOf(placeHold) == 0){
+					targetPoint = [0,2];
+				}else if(slashBackArr.indexOf(placeHold) == 1){
+					targetPoint = [1,1];
+				}
+				else{
+					targetPoint = [2,0];
+				}
+					console.log("find targetPoint");
+			}
+
+			if(resultArr[1][1] === placeHold){
+				randomX = 1;
+				randomY = 1;
+			}else if(targetPoint.length>0){
+				randomX = targetPoint[1];
+				randomY = targetPoint[0];
+			}else{
+				var randomX = Math.floor(Math.random()*3);
+				var randomY = Math.floor(Math.random()*3);
+
+				while(resultArr[randomY][randomX] != placeHold){
+					randomX = Math.floor(Math.random()*3);
+					randomY = Math.floor(Math.random()*3);
+					
+				}
+			}
+				
 			resultArr[randomY][randomX] = "%";
 			document.getElementById(randomY+"_"+randomX).textContent = resultArr[randomY][randomX];
 			if (flag === 0) {
@@ -289,6 +346,9 @@ function game(player1,player2){
 function getPlayer(){
 	do{
 		var player1 = prompt("please input player1 name:","X");
+		while(player1 === "%"){
+			player1 = prompt("player name cannot be '%', input again:","X");
+		}
 		var playerWithComputer = confirm("Do you want to play with computer?");
 		if (playerWithComputer==true){
 		  return [player1];
@@ -298,7 +358,7 @@ function getPlayer(){
 		if(player1 === player2){
 			alert("please enter another player name!")
 		}
-	}while(player1 === player2);
+	}while(player1 === player2 || player2 == "%");
 	document.querySelector(".player1Name").textContent = player1;
 	document.querySelector(".player2Name").textContent = player2;
 	return [player1, player2];
