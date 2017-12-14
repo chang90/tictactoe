@@ -102,6 +102,9 @@ function game(player1,player2){
 
 					var winner = checkWin(resultArr, placeHold, methodClick);
 					if (typeof(winner) === 'string') {
+						if(winner === "%"){
+							winner = "AI";
+						}
 						winnerRecord.push(winner);
 						gameState = "end";
 						sideBarResult();
@@ -111,9 +114,13 @@ function game(player1,player2){
 				if(computerPlayer === true && gameState == "start"){
 					currentPlayer = "AI";
 					console.error("AI not finish!")
+
 					aiMove(resultArr,placeHold);
 					var winner = checkWin(resultArr, placeHold, methodClick);
 					if (typeof(winner) === 'string') {
+						if(winner === "%"){
+							winner = "AI";
+						}
 						winnerRecord.push(winner);
 						gameState = "end";
 						sideBarResult();
