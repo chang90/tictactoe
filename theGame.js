@@ -165,15 +165,14 @@ function game(player1,player2){
 					targetPoint = [0,0];
 				}else if(slashArr.indexOf(placeHold) == 1){
 					targetPoint = [1,1];
-				}
-				else{
+				}else{
 					targetPoint = [2,2];
 				}
 					console.log("find targetPoint");
 			}
 
 			var slashBackArr = [resultArr[0][2],resultArr[1][1],resultArr[2][0]];
-			if(slashBackArr.filter(elem => elem == "%").length==2 && 
+			if(slashBackArr.filter(elem => elem == playerArr[0]).length==2 && 
 				slashBackArr.filter(elem => elem == placeHold).length==1){
 				if(slashBackArr.indexOf(placeHold) == 0){
 					targetPoint = [0,2];
