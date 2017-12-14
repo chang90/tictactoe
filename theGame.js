@@ -6,6 +6,7 @@ function game(player1,player2){
 		initMap(resultArr, 3, 3, placeHold);
 		clickEvent(resultArr, playerArr, placeHold);
 		resetGame(resultArr,placeHold);
+
 	}
 
 	//init game map
@@ -28,12 +29,28 @@ function game(player1,player2){
 		}
 	}
 
-	function clickEvent(resultArr, playerArr, placeHold) {
-		var flag = 1;
+	function whoIsFirst(resultArr,placeHold){
+		var flag = Math.round(Math.random());
+		if(flag===1){
+			alert(playerArr[0] + " is first!")
+		}
+		else{
+			if(playerArr.length ===1){
+				alert("computer is first!");
+			}else{
+				alert(playerArr[1] + " is first!")
+			}
 
+		}
+		return flag;
+	}
+
+	function clickEvent(resultArr, playerArr, placeHold) {
+		if (computerPlayer==true && flag == 0){
+			aiMove(resultArr,placeHold);
+		}
 		var methodClick = function(event) {
 			var idArr = event.target.id.split("_");
-			// console.log(resultArr)
 
 			//the losser will get offensive move in next round
 			if(resultArr.join().split(",").filter(value => value != placeHold).length===0){
@@ -50,8 +67,11 @@ function game(player1,player2){
 				flag = 0;
 			}
 
-			currentPlayer = playerArr[flag];
-			console.log("currentPlayer = "+ currentPlayer);
+			if(computerPlayer === true && flag ===1){
+				currentPlayer = "computer";
+			}else{
+				currentPlayer = playerArr[flag];
+			}
 
 			if (resultArr[Number(idArr[0])][Number(idArr[1])] === placeHold) {
 				event.target.textContent = playerArr[flag];
@@ -65,11 +85,43 @@ function game(player1,player2){
 					sideBarResult();
 				}
 			}
+			//play with computer
+			if(computerPlayer === true){
+				console.error("AI not finish!")
+				aiMove(resultArr,placeHold);
+				winner = checkWin(resultArr, placeHold, methodClick);
+				if (typeof(winner) === 'string') {
+					winnerRecord.push(winner);
+					gameState = "end";
+					sideBarResult();
+				}
+			}
 		}
 
 		document.querySelector('.game').querySelectorAll('span').forEach(function(elem) {
 			elem.addEventListener('click', methodClick)
 		})
+	}
+
+  //computer AI player
+	function aiMove(resultArr,placeHold){
+		console.log("resultArr");
+		console.log(resultArr);
+		
+		var randomX = Math.floor(Math.random()*3);
+		var randomY = Math.floor(Math.random()*3);
+		while(resultArr[randomY][randomX] != placeHold){
+			randomX = Math.floor(Math.random()*3);
+			randomY = Math.floor(Math.random()*3);
+			
+		}
+		resultArr[randomY][randomX] = "%";
+		document.getElementById(randomY+"_"+randomX).textContent = resultArr[randomY][randomX];
+		if (flag === 0) {
+			flag = 1;
+		} else {
+			flag = 0;
+		}
 	}
 
 	function checkWin(resultArr, placeHold, methodClick) {
@@ -142,7 +194,7 @@ function game(player1,player2){
 
 	  if(winnerRecord.length >= 5){
 	  	var player1Num = winnerRecord.filter(elem => elem == playerArr[0]).length;
-	  	var player2Num = winnerRecord.filter(elem => elem == playerArr[1]).length;
+	  	var player2Num = winnerRecord.filter(elem => elem == (playerArr[1]|| "%")).length;
 	  	
 	 		var newRecord = document.createElement("div");
 	 		newRecord.id = "totalScore";
@@ -199,18 +251,32 @@ function game(player1,player2){
 	if(player2){
 		playerArr.push(player2);
 	}
+	var flag = whoIsFirst();
+
+  var computerPlayer = false;
+  if (playerArr.length === 1){
+  	computerPlayer = true;
+  }
 	mainGame();
 }
 
 function getPlayer(){
 	do{
 		var player1 = prompt("please input player1 name:","X");
+		var playerWithComputer = confirm("Do you want to play with computer?");
+		if (playerWithComputer==true)
+		{
+		    return[player1];
+		}
+
 		var player2 = prompt("please input player2 name:","Y");
 		if(player1 === player2){
 			alert("please enter another player name!")
 		}
 	}while(player1 === player2);
-	return [player1,player2];
+	document.querySelector(".player1Name").textContent = player1;
+	document.querySelector(".player2Name").textContent = player2;
+	return [player1, player2];
 }
 
 playerGroup = getPlayer();
