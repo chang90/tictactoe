@@ -1,7 +1,7 @@
 # Project: Tic-Tac-Toe
 
 ## Demo website
-https://hiby90hou.github.io/tictactoe/
+[GitHub Pages](https://hiby90hou.github.io/tictactoe/)
 
 ## the technologies used in this project
 
