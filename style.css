@@ -61,6 +61,10 @@ aside>h3{
 	padding-top: 20px;
 }
 
+.container{
+	position: relative;
+}
+
 main{
 	margin-right: 305px;
 	height: 100%;
@@ -81,8 +85,8 @@ main{
 	min-width: 100px;
 }
 .game{
-	height: 350px;
-	width: 350px;
+	height: 300px;
+	width: 300px;
 	box-sizing: content-box;
 	display: flex;
 	flex-direction: column;
@@ -97,12 +101,12 @@ main{
 	flex: 1;
 }
 .game span{
-	margin: 2%;
+	margin: 2px;
 	line-height: 100px;
 	text-align: center;
 	display: inline-block;
-	width: 29%;
-	height: 90%;
+	width: 95px;
+	height: 95px;
 	border: 3px solid white;
 	font-size: 100px;
   position: relative;
@@ -174,17 +178,104 @@ main{
 	position: relative;
 }
 
-.buttonBox button{
+.buttonBox button, .showInfo button{
 	margin: 10px 0;
 	display: block;
 	width: 60px;
 	height: 30px;
 	border-radius: 10px;
 	background-color: #ccc;
-	z-index: 100;
+	z-index: 3;
 	position: absolute;
+}
+.showInfo{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(200,200,200,0.8);
+	z-index: 10;
+	/*display: none;*/
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+}
+.showInfo button{
+	position: relative;
+}
+.showInfo>h3{
+	width: 300px;
+	font-size: 40px;
+}
+.showInfo>div{
+	margin: 20px;
 }
 
 footer{
 	text-align: center;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+  margin-top: 10px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: lightblue;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: steelblue;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 17px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.swichBox{
+	font-size: 24px;
+	line-height: 30px;
 }

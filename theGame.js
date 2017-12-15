@@ -113,7 +113,7 @@ function game(player1,player2){
 				//play with computer
 				if(computerPlayer === true && gameState == "start"){
 					currentPlayer = "AI";
-					console.error("AI not finish!")
+					// console.error("AI not finish!")
 
 					aiMove(resultArr,placeHold);
 					var winner = checkWin(resultArr, placeHold, methodClick);
@@ -182,7 +182,7 @@ function game(player1,player2){
 				else{
 					targetPoint = [2,0];
 				}
-					console.log("find targetPoint");
+				console.log("find targetPoint");
 			}
 
 			if(resultArr[1][1] === placeHold){
@@ -256,7 +256,7 @@ function game(player1,player2){
 			for(var j = 0; j<3; j++){
 				document.getElementById(j+"_"+(2-j)).classList.add("slash");
 			}
-			return winner;		
+			return winner;
 		}
 
 		if (typeof winner === 'string') {
@@ -341,27 +341,89 @@ function game(player1,player2){
 		}
 	}
 }
+function initBeginPage(){
+	var playWithAI = document.querySelector("#playWithAI");
+	var player2NameInput = document.querySelector("#player2NameInput");
 
-function getPlayer(){
-	do{
-		var player1 = prompt("please input player1 name:","X");
-		while(player1 === "%"){
-			player1 = prompt("player name cannot be '%', input again:","X");
-		}
-		var playerWithComputer = confirm("Do you want to play with computer?");
-		if (playerWithComputer==true){
-		  return [player1];
-		}
-
-		var player2 = prompt("please input player2 name:","Y");
-		if(player1 === player2){
-			alert("please enter another player name!")
-		}
-	}while(player1 === player2 || player2 == "%");
-	document.querySelector(".player1Name").textContent = player1;
-	document.querySelector(".player2Name").textContent = player2;
-	return [player1, player2];
+	playWithAI.addEventListener('change', 
+		function(){
+    	player2NameInput.disabled = !player2NameInput.disabled;
+		})
 }
 
-playerGroup = getPlayer();
-game(playerGroup[0], playerGroup[1]);
+function getPlayer(){
+	var playWithAI = document.querySelector("#playWithAI");
+	var player1NameInput = document.querySelector("#player1NameInput");
+	var player2NameInput = document.querySelector("#player2NameInput");
+	var goButton = document.querySelector("#goButton");
+	var showInfo = document.querySelector(".showInfo");
+
+
+	goButton.addEventListener("click",
+		function(){
+			
+			//play with AI
+			if(playWithAI.checked){
+				var player1 = player1NameInput.value;
+				player1 = player1.slice(0,1);
+				if(player1 === "%"||player1 === " "){
+					alert("player name cannot be '%' or space, input again:")
+				}else{
+					playerGroup = [player1];
+					showInfo.style.display = "none";
+					console.log("close");
+					document.querySelector(".player1Name").textContent = player1;
+			    document.querySelector(".player2Name").textContent = "AI";
+					game(playerGroup[0]);
+				}
+			}
+			else{
+				var player1 = player1NameInput.value;
+				player1 = player1.slice(0,1);
+				var player2 = player2NameInput.value;
+				player1 = player1.slice(0,1);
+				if(player1 === player2 || player1 == "%" || player2 == "%"){
+					alert("player name cannot be '%' or same, input again:")
+				}else{
+					playerGroup = [player1,player2];
+					showInfo.style.display = "none";
+					console.log("close");
+					document.querySelector(".player1Name").textContent = player1;
+	        document.querySelector(".player2Name").textContent = player2;
+					game(playerGroup[0],playerGroup[1]);
+				}
+			}
+		})
+
+	// do{
+	// 	var player1 = prompt("please input player1 name:","X");
+	// 	player1 = player1.slice(0,1);
+	// 	while(player1 === "%"){
+	// 		player1 = prompt("player name cannot be '%', input again:","X");
+	// 		player1 = player1.slice(0,1);
+	// 	}
+	// 	var playerWithComputer = confirm("Do you want to play with computer?");
+	// 	if (playerWithComputer==true){
+	// 		document.querySelector(".player1Name").textContent = player1;
+	// 		document.querySelector(".player2Name").textContent = "AI";
+	// 	  return [player1];
+	// 	}
+
+	// 	var player2 = prompt("please input player2 name:","Y");
+	// 	player2 = player2.slice(0,1);
+	// 	if(player1 === player2){
+	// 		alert("please enter another player name!")
+	// 	}
+	// }while(player1 === player2 || player2 == "%");
+	// document.querySelector(".player1Name").textContent = player1;
+	// document.querySelector(".player2Name").textContent = player2;
+	// return [player1, player2];
+}
+
+window.onload = function(){
+	initBeginPage();
+	var playerGroup = [];
+	getPlayer();
+	// game(playerGroup[0], playerGroup[1]);
+	
+}
