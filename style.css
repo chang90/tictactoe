@@ -21,6 +21,7 @@ body{
 	display: grid;
 	grid-template-rows: 100px 1fr 50px;
 	grid-template-columns: 1fr;
+	overflow: hidden;
 }
 nav{
 	width: 100%;
