@@ -250,7 +250,7 @@ footer{
   width: 13px;
   left: 2px;
   bottom: 2px;
-  background-color: white;
+  background-color: white;  
   -webkit-transition: .4s;
   transition: .4s;
 }
