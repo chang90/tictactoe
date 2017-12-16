@@ -202,22 +202,19 @@ function checkWin(resultArr, placeHold, methodClick) {
 	var winner = null;
 	var isEmptyArr = resultArr.join().split(",").filter(value => value === placeHold);
 
-	//for row same situation
 	for (var i = 0; i < resultArr.length; i++) {
 
+		//for row same situation
 		if (resultArr[i][0] === resultArr[i][1] && resultArr[i][1] === resultArr[i][2] && resultArr[i][0] != placeHold) {
-			// console.log(resultArr[i][0] + " win");
 			winner = resultArr[i][0];
 			for (var j = 0; j < 3; j++) {
 				document.getElementById(i + "_" + j).classList.add("horizontalLine");
 			}
-			return winner;
+			break;
 		}
-	}
 
-	for (var i = 0; i < resultArr.length; i++) {
 		//for column same situation
-		if (resultArr[0][i] === resultArr[1][i] && resultArr[0][i] === resultArr[2][i] && resultArr[0][i] != placeHold) {
+		else if (resultArr[0][i] === resultArr[1][i] && resultArr[0][i] === resultArr[2][i] && resultArr[0][i] != placeHold) {
 			// console.log(resultArr[0][i] + " win");
 			winner = resultArr[0][i];
 			for (var j = 0; j < 3; j++) {
@@ -244,7 +241,8 @@ function checkWin(resultArr, placeHold, methodClick) {
 			}
 			break;
 		} 
-
+		
+		//tie situation
 		else if (isEmptyArr.length === 0) {
 			winner = "tie";
 			break;
