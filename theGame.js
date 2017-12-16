@@ -15,7 +15,6 @@ function game(player1, player2) {
 		computerPlayer = true;
 	}
 	mainGame(playerArr, computerPlayer);
-
 }
 
 function mainGame(playerArr, computerPlayer) {
@@ -25,7 +24,6 @@ function mainGame(playerArr, computerPlayer) {
 	initMap(resultArr, 3, 3, placeHold, playerArr);
 	clickEvent(resultArr, playerArr, placeHold, computerPlayer);
 	resetGame(resultArr, playerArr, placeHold, computerPlayer);
-
 }
 
 //init game map
@@ -241,7 +239,7 @@ function checkWin(resultArr, placeHold, methodClick) {
 			}
 			break;
 		} 
-		
+
 		//tie situation
 		else if (isEmptyArr.length === 0) {
 			winner = "tie";
@@ -298,7 +296,6 @@ function sideBarResult(playerArr, computerPlayer) {
 		recordList.appendChild(newRecord);
 		winnerRecord = [];
 	}
-
 }
 
 function resetGame(resultArr, playerArr, placeHold, computerPlayer) {
@@ -308,7 +305,6 @@ function resetGame(resultArr, playerArr, placeHold, computerPlayer) {
 		resetFunc(resultArr, playerArr, placeHold, computerPlayer);
 	});
 	document.querySelector(".buttonBox").appendChild(reset);
-
 }
 
 function resetFunc(resultArr, playerArr, placeHold, computerPlayer) {
@@ -362,8 +358,8 @@ function getPlayer() {
 			if (playWithAI.checked) {
 				var player1 = player1NameInput.value;
 				player1 = player1.slice(0, 1);
-				if (player1 === "%" || player1 === " ") {
-					alert("player name cannot be '%' or space, input again:");
+				if (player1 === "%" || player1 === " " || player1 === "" )  {
+					alert("player name cannot be '%' or space or blank, input again:");
 				} else {
 					playerGroup = [player1];
 					showInfo.style.display = "none";
@@ -377,8 +373,9 @@ function getPlayer() {
 				player1 = player1.slice(0, 1);
 				var player2 = player2NameInput.value;
 				player1 = player1.slice(0, 1);
-				if (player1 === player2 || player1 == "%" || player2 == "%") {
-					alert("player name cannot be '%' or same, input again:");
+				if (player1 === player2 || player1 == "%" || player2 == "%" ||
+				 player1 === " " || player1 === "" || player2 === " " || player2 === "") {
+					alert("player name cannot be '%' or same or blank, input again:");
 				} else {
 					playerGroup = [player1, player2];
 					showInfo.style.display = "none";
