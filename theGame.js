@@ -341,6 +341,13 @@ function initBeginPage() {
 		function() {
 			player2NameInput.disabled = !player2NameInput.disabled;
 		});
+
+	var sidebarSwitch = document.querySelector(".sidebarSwitch");
+	sidebarSwitch.addEventListener('click',
+		function(){
+			sidebarSwitch.classList.toggle("change");
+			document.querySelector("aside").classList.toggle("closeAside");
+		})
 }
 
 function getPlayer() {
@@ -362,7 +369,7 @@ function getPlayer() {
 					alert("player name cannot be '%' or space or blank, input again:");
 				} else {
 					playerGroup = [player1];
-					showInfo.style.display = "none";
+					showInfo.classList.add("hide");
 					console.log("close");
 					document.querySelector(".player1Name").textContent = player1;
 					document.querySelector(".player2Name").textContent = "AI";
@@ -378,7 +385,7 @@ function getPlayer() {
 					alert("player name cannot be '%' or same or blank, input again:");
 				} else {
 					playerGroup = [player1, player2];
-					showInfo.style.display = "none";
+					showInfo.classList.add("hide");
 					console.log("close");
 					document.querySelector(".player1Name").textContent = player1;
 					document.querySelector(".player2Name").textContent = player2;
