@@ -87,6 +87,7 @@ function clickEvent(resultArr, playerArr, placeHold, computerPlayer) {
 					winnerRecord.push(winner);
 					gameState = "end";
 					sideBarResult(playerArr, computerPlayer);
+					return;
 				}
 				flag = Number(!flag);
 
