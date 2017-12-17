@@ -44,7 +44,7 @@ nav p{
 
 aside{
 	position: absolute;
-	top: 20px;
+	top: 5%;
 	right: 0;
 	width: 100%;
 	max-width: 300px;
@@ -127,8 +127,11 @@ main{
 	/*flex-direction: row;*/
 	justify-content: space-around;
 }
-.player1, .player2{
-/*	min-width: 100px;*/
+.player1{
+  color: blue;
+}
+.player2{
+  color: red;
 }
 .game{
 /*	height: 300px;
@@ -153,12 +156,8 @@ main{
 .game span{
 	flex: 1;
 	height: 100%;
-	/*margin: 2px;*/
 	line-height: 100px;
 	text-align: center;
-	/*display: inline-block;*/
-/*	width: 95px;
-	height: 95px;*/
 	border: 3px solid white;
 	font-size: 100px;
   position: relative;
@@ -167,6 +166,14 @@ main{
 }
 .game span:hover{
 	cursor: pointer;
+}
+
+.game .red:hover{
+	background-color: rgba(255,0,0,0.5);
+}
+
+.game .blue:hover{
+	background-color: rgba(0,0,255,0.2);
 }
 
 
@@ -256,11 +263,11 @@ main{
 	flex-direction: column;
 	justify-content: center;
 	align-items:center;
-	transition-duration: 5s;
+	transition-duration: 2s;
 	transform: translateY(0);
 }
 .showInfo.hide{
-	transform: translateY(-100%);
+	transform: translateY(-95%);
 }
 .showInfo button{
 	position: relative;
@@ -271,6 +278,21 @@ main{
 }
 .showInfo>div{
 	margin: 20px;
+}
+.changeGameMode{
+	background-color: rgba(200,200,200,0.8);
+	position: absolute;
+	left:10%;
+	bottom: -30px;
+	height: 30px;
+	border-radius: 0 0 10px 10px;
+	margin: 0;
+	padding: 10px;
+	display: none;
+}
+
+.changeGameMode:hover{
+	cursor:pointer;
 }
 
 footer{

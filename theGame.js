@@ -48,6 +48,7 @@ function initMap(resultArr, row, column, placeHold, playerArr) {
 
 function whoIsFirst(playerArr) {
 	flag = Math.round(Math.random());
+	
 	if (flag === 0) {
 		alert(playerArr[0] + " is first!")
 	} else {
@@ -90,12 +91,11 @@ function clickEvent(resultArr, playerArr, placeHold, computerPlayer) {
 					return;
 				}
 				flag = Number(!flag);
+				changeBackground();
 
 				//play with computer
 				if (computerPlayer === true && gameState == "start") {
-
 					aiMove(resultArr, placeHold, playerArr, methodClick);
-
 				}
 
 			}
@@ -106,7 +106,7 @@ function clickEvent(resultArr, playerArr, placeHold, computerPlayer) {
 	if (computerPlayer == true && flag == 1) {
 		aiMove(resultArr, placeHold, playerArr, methodClick);
 	}
-
+  changeBackground();
 	// when user click the button, call methodClick
 	document.querySelector('.game').querySelectorAll('span').forEach(function(elem) {
 		elem.addEventListener('click', methodClick)
@@ -194,6 +194,7 @@ function aiMove(resultArr, placeHold, playerArr, methodClick) {
 			sideBarResult(playerArr, true);
 		}
 		flag = Number(!flag);
+		changeBackground();
 	}
 }
 
@@ -329,6 +330,7 @@ function resetFunc(resultArr, playerArr, placeHold, computerPlayer) {
 		} else if (winnerRecord.slice(-1)[0] === playerArr[1] || winnerRecord.slice(-1)[0] === "AI") {
 			flag = 0;
 		}
+		changeBackground();
 
 		mainGame(playerArr, computerPlayer);
 	}
@@ -357,6 +359,7 @@ function getPlayer() {
 	var player2NameInput = document.querySelector("#player2NameInput");
 	var goButton = document.querySelector("#goButton");
 	var showInfo = document.querySelector(".showInfo");
+	var changeGameMode = document.querySelector(".changeGameMode");
 
 
 	goButton.addEventListener("click",
@@ -370,6 +373,7 @@ function getPlayer() {
 					alert("player name cannot be '%' or space or blank, input again:");
 				} else {
 					playerGroup = [player1];
+					changeGameMode.style.display = "block";
 					showInfo.classList.add("hide");
 					console.log("close");
 					document.querySelector(".player1Name").textContent = player1;
@@ -386,6 +390,7 @@ function getPlayer() {
 					alert("player name cannot be '%' or same or blank, input again:");
 				} else {
 					playerGroup = [player1, player2];
+					changeGameMode.style.display = "block";
 					showInfo.classList.add("hide");
 					console.log("close");
 					document.querySelector(".player1Name").textContent = player1;
@@ -396,6 +401,33 @@ function getPlayer() {
 		});
 }
 
+function resetPlayer(){
+	var changeGameMode = document.querySelector(".changeGameMode");
+	changeGameMode.addEventListener("click", function(){
+		playerGroup = [];
+		resultArr = [];
+		winnerRecord = [];
+		//remove the game view
+		document.querySelector('.game').innerHTML = '';
+		document.querySelector('.buttonBox').innerHTML = '';
+		document.querySelector(".showInfo").classList.remove("hide");
+		document.querySelector(".recordList").innerHTML = "";
+		changeGameMode.style.display = "none";
+	})
+}
+
+function changeBackground(){
+	var allSpan = document.querySelector(".game").querySelectorAll('span');
+	allSpan.forEach(function(elem){
+		if(flag==1){
+			elem.classList.remove("blue");
+			elem.classList.add("red");
+		}else{
+			elem.classList.remove("red");
+			elem.classList.add("blue");			
+		}
+	})
+}
 
 initBeginPage();
 var playerGroup = [];
@@ -403,3 +435,4 @@ var winnerRecord = [];
 var resultArr = [];
 var flag;
 getPlayer();
+resetPlayer();
