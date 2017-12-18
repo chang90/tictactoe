@@ -325,10 +325,13 @@ function resetFunc(resultArr, playerArr, placeHold, computerPlayer) {
 
 		//decide who is first in next round
 		//the losser will get offensive move in next round
+		//if it is tie, the player who start second in the last round will start first
 		if (winnerRecord.slice(-1)[0] === playerArr[0]) {
 			flag = 1;
 		} else if (winnerRecord.slice(-1)[0] === playerArr[1] || winnerRecord.slice(-1)[0] === "AI") {
 			flag = 0;
+		} else{
+			flag = Number(!flag);
 		}
 		changeBackground();
 
